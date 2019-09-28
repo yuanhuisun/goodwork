@@ -3,6 +3,7 @@
 namespace App\Core\Repositories;
 
 use App\Core\Models\Task;
+use App\Core\Models\User;
 
 class TaskRepository
 {
@@ -24,7 +25,7 @@ class TaskRepository
         })->with('tags') : $query;
 
         return $query->where(['taskable_type' => $type, 'taskable_id' => $entityId])
-                     ->with('user:id,avatar,username,name')
+                     ->with('assignee:id,avatar,username,name')
                      ->with('creator:id,avatar')
                      ->with('related:id,name')
                      ->with('status:id,name,color')
@@ -33,22 +34,22 @@ class TaskRepository
     }
 
     /**
-     * @param  array                 $data
-     * @return \App\Core\Models\Task
+     * @param  mixed $task
+     *
+     * @return bool
      */
-    public function create(array $data): Task
+    public static function create($task): bool
     {
-        return $this->model->create([
-            'name'              => $data['name'],
-            'assigned_to'       => $data['assigned_to'] ?? null,
-            'created_by'        => auth()->user()->id,
-            'notes'             => $data['notes'],
-            'due_on'            => $data['due_on'],
-            'related_to'        => $data['related_to'] ?? null,
-            'taskable_type'     => $data['group_type'],
-            'taskable_id'       => $data['group_id'],
-            'status_id'         => $data['status_id'] ?? 1,
-            'cycle_id'          => $data['cycle_id'] ?? null,
+        return Task::insert([
+            'uuid'              => $task->taskId(),
+            'name'              => $task->taskDetails()->title(),
+            'assigned_to'       => $task->assignee()->userId() ?? null,
+            'created_by'        => $task->creator()->userId(),
+            'notes'             => $task->taskDetails()->description(),
+            'due_on'            => $task->dueDate()->toString(),
+            'taskable_type'     => $task->group()->type()->name(),
+            'taskable_id'       => $task->group()->groupId(),
+            'status_id'         => 1,
         ]);
     }
 
@@ -62,5 +63,10 @@ class TaskRepository
                            ->with('steps')
                            ->orderBy('due_on')
                            ->get();
+    }
+
+    public static function getUserById($userId)
+    {
+        return User::where('id', $userId)->select('id', 'name', 'username', 'avatar')->first();
     }
 }

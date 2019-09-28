@@ -22,11 +22,11 @@ class Task extends Model
     ];
 
     /**
-     * Return the user this task belongs to.
+     * Return the user this task assigned to.
      *
      * @return mixed
      */
-    public function user()
+    public function assignee()
     {
         return $this->belongsTo(User::class, 'assigned_to', 'id');
     }

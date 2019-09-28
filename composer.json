@@ -21,7 +21,8 @@
         "laravel/framework": "^6.0",
         "laravel/tinker": "~1.0",
         "pda/pheanstalk": "^4.0",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "ramsey/uuid": "^3.8"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.26.2",

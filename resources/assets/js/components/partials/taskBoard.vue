@@ -81,7 +81,7 @@
           <span class="text-xs">Due on</span>
           <span class="text-sm text-indigo-700 font-medium">{{dueOn(task.due_on)}}</span>
         </p>
-        <img v-if="task.assigned_to" :src="generateUrl(task.user.avatar)" class="rounded-full w-8 h-8" :title="task.user.name">
+        <img v-if="task.assigned_to" :src="generateUrl(task.assignee.avatar)" class="rounded-full w-8 h-8" :title="task.assignee.name">
         <font-awesome-icon v-else :icon="faQuestionCircle" class="text-gray-500 fa-2x" title="Not Assigned"></font-awesome-icon>
       </div>
       <div class="text-gray-700 text-left pt-2">

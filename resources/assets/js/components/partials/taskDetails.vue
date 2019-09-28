@@ -27,8 +27,8 @@
             Assignee
           </div>
           <div class="px-8">
-            <a v-if="task.assigned_to" :href="'/users/' + task.user.username" class="py-2">
-              <img v-if="task.assigned_to" :src="generateUrl(task.user.avatar)" class="rounded-full w-8 h-8 mx-2 self-start">
+            <a v-if="task.assigned_to" :href="'/users/' + task.assignee.username" class="py-2">
+              <img v-if="task.assigned_to" :src="generateUrl(task.assignee.avatar)" class="rounded-full w-8 h-8 mx-2 self-start">
             </a>
             <div v-else class="border-2 rounded-full text-xs w-8 h-8 flex items-center justify-center">N/A</div>
           </div>

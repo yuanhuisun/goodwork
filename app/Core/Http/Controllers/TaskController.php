@@ -3,26 +3,20 @@
 namespace App\Core\Http\Controllers;
 
 use App\Core\Models\Task;
+use App\TaskManager\TaskManager;
 use App\Core\Utilities\GroupTrait;
 use App\Core\Repositories\TaskRepository;
-use App\Core\Repositories\MentionRepository;
 use App\Core\Http\Requests\UpdateTaskRequest;
-use App\Core\Http\Requests\ValidateTaskCreation;
 
 class TaskController extends Controller
 {
     use GroupTrait;
 
-    public function store(ValidateTaskCreation $request, TaskRepository $repository, MentionRepository $mentionRepository)
+    public function store()
     {
         try {
             $this->authorize('create', Task::class);
-            $task = $repository->create($request->all());
-            $task->tags()->attach(request('labels'));
-            if (request('mentions')) {
-                $mentionRepository->create('task', $task);
-            }
-            $task->load('user:id,avatar', 'status', 'tags:tag_id,label');
+            $task = TaskManager::createTask(request());
 
             return response()->json([
                 'status'  => 'success',
