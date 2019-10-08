@@ -11,12 +11,12 @@ class Status
         'To Do', 'In Progress', 'In Review', 'Completed', 'Canceled',
     ];
 
-    function __construct(string $name = null)
+    public function __construct(string $name = null)
     {
         $this->name = $this->validStatus($name);
     }
 
-    public function validStatus(Status $status = null): string
+    public function validStatus(self $status = null): string
     {
         if ($status === null) {
             return 'To Do';
@@ -25,7 +25,6 @@ class Status
         if (in_array($status, $this->type)) {
             return $status;
         }
-        throw new InvalidArgumentException("Status type is not valid", 1);
-        
+        throw new InvalidArgumentException('Status type is not valid', 1);
     }
 }

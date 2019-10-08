@@ -34,7 +34,7 @@ class TaskRepository
     }
 
     /**
-     * @param  mixed $task
+     * @param mixed $task
      *
      * @return bool
      */

@@ -9,7 +9,7 @@ class Creator
     private $username;
     private $avatar;
 
-    function __construct($userId, $name, $username, $avatar)
+    public function __construct($userId, $name, $username, $avatar)
     {
         $this->userId = $userId;
         $this->name = $name;

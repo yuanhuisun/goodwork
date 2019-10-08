@@ -9,7 +9,7 @@ class TaskDetails
     private $title;
     private $description;
 
-    function __construct(string $title, string $description = null)
+    public function __construct(string $title, string $description = null)
     {
         $this->title = $this->validTitle($title);
         $this->description = $description;
@@ -18,7 +18,7 @@ class TaskDetails
     public function validTitle($title): string
     {
         if (validator([$title], ['max:255'])->fails()) {
-            throw new InvalidArgumentException("Title should be 255 character or less", 1);
+            throw new InvalidArgumentException('Title should be 255 character or less', 1);
         }
 
         return $title;

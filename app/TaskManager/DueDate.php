@@ -10,7 +10,7 @@ class DueDate
     const FORMAT = 'Y-m-d';
     private $value;
 
-    function __construct(string $date)
+    public function __construct(string $date)
     {
         $this->value = $this->validDate($date);
     }
@@ -18,13 +18,14 @@ class DueDate
     public function validDate(string $date): CarbonImmutable
     {
         $this->formatIsValid($date);
+
         return $this->dateNotInThePast($date);
     }
 
     public function formatIsValid($date): void
     {
         if (validator([$date], ['date_format:' . self::FORMAT])->fails()) {
-            throw new InvalidArgumentException("Invalid date format", 0);
+            throw new InvalidArgumentException('Invalid date format', 0);
         }
     }
 
@@ -32,9 +33,9 @@ class DueDate
     {
         $date = CarbonImmutable::parse($date);
         if ($date->lessThan(CarbonImmutable::today())) {
-            throw new DueDateCantBeInThePast();        
+            throw new DueDateCantBeInThePast();
         }
-        
+
         return $date;
     }
 

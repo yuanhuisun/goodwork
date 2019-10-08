@@ -8,10 +8,10 @@ class GroupType
 {
     private $name;
     private $allowed = [
-        'project', 'team', 'office'
+        'project', 'team', 'office',
     ];
 
-    function __construct(string $name)
+    public function __construct(string $name)
     {
         $this->name = $this->typeIsValid($name);
     }
@@ -21,7 +21,7 @@ class GroupType
         if (in_array($name, $this->allowed)) {
             return $name;
         }
-        throw new InvalidArgumentException("Group type is not valid", 1);        
+        throw new InvalidArgumentException('Group type is not valid', 1);
     }
 
     public function name()
